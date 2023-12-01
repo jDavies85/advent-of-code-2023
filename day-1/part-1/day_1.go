@@ -26,11 +26,6 @@ func ReadFile(path string) []string {
 
 	readFile.Close()
 
-	// for _, line := range fileLines {
-	// 	fmt.Println(line)
-	// }
-
-	// fmt.Println(fileLines)
 	return fileLines
 }
 
