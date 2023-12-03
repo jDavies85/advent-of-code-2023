@@ -75,19 +75,25 @@ func GetRoundResult(input string) RoundResult {
 	return result
 }
 
-func IsValidGame(roundResults []RoundResult, maxCubes RoundResult) bool {
-	for _, round := range roundResults {
-		if round.red > maxCubes.red || round.green > maxCubes.green || round.blue > maxCubes.blue {
-			return false
+func GetPowerOfGame(roundResults []RoundResult) int {
+	var red = 0
+	var green = 0
+	var blue = 0
+	for _, roundResult := range roundResults {
+		if roundResult.red > red {
+			red = roundResult.red
+		}
+		if roundResult.green > green {
+			green = roundResult.green
+		}
+		if roundResult.blue > blue {
+			blue = roundResult.blue
 		}
 	}
-	return true
+	return red * green * blue
 }
 
 func SumValidGames(filePath string) int {
-	//set scores
-	var maxCubes = RoundResult{red: 12, green: 13, blue: 14}
-
 	//parse file
 	var lines = ReadFile(filePath)
 	//get list of games with round results
@@ -96,25 +102,25 @@ func SumValidGames(filePath string) int {
 		var roundresults = RoundResults(line)
 		games = append(games, Game{gameNumber: i + 1, roundResults: roundresults})
 	}
-	//loop through games and add valid games to valid game list
-	var validGames = []int{}
+
+	//Get power of results in all games
+	var scores = []int{}
 	for _, game := range games {
-		if IsValidGame(game.roundResults, maxCubes) {
-			validGames = append(validGames, game.gameNumber)
-		}
-	}
-	//sum game numbers
-	var sum int = 0
-	for _, n := range validGames {
-		sum = sum + n
+		var roundresult = GetPowerOfGame(game.roundResults)
+		scores = append(scores, roundresult)
 	}
 
+	//sum game numbers
+	var sum int = 0
+	for _, n := range scores {
+		sum = sum + n
+	}
 	return sum
 }
 
 func main() {
-	fmt.Println("Hello Day 2 Part 1")
-	var sum = SumValidGames("../day_2_input.txt")
-	//var sum = SumValidGames("test_input.txt")
+	fmt.Println("Hello Day 2 Part 2")
+	//var sum = SumValidGames("../day_2_input.txt")
+	var sum = SumValidGames("../test_input.txt")
 	fmt.Println(sum)
 }

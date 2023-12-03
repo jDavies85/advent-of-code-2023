@@ -63,9 +63,21 @@ func TestRoundResults(t *testing.T) {
 	}
 }
 
+func TestGetPowerOfGame(t *testing.T) {
+	input := []RoundResult{RoundResult{blue: 3, red: 4}, RoundResult{red: 1, green: 2, blue: 6}, RoundResult{green: 2}}
+	expect := 48
+
+	got := GetPowerOfGame(input)
+
+	if expect != got {
+		t.Errorf("Failed to calculate power of results. Got %v, expected %v \n",
+			got, expect)
+	}
+}
+
 func TestSumValidGames(t *testing.T) {
 	path := "../test_input.txt"
-	expect := 8
+	expect := 2286
 
 	got := SumValidGames(path)
 
