@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -66,10 +67,32 @@ func GetNumber(str string) int {
 	return number
 }
 
-func GetSeedLocation(seed int, maps []ResourceMap) int {
-	result := 0
+func GetDestination(src int, res []ResourceRange) int {
+	for _, r := range res {
+		if src >= r.sourceRangeStart && src <= (r.sourceRangeStart-1)+r.rangeLength {
+			return src + (r.destinationRangeStart - r.sourceRangeStart)
+		}
+	}
+	return src
+}
 
-	return result
+func GetSeedLocation(seed int, maps []ResourceMap) int {
+	location := seed
+	for _, _map := range maps {
+		location = GetDestination(location, _map.resourceRange)
+	}
+	return location
+}
+
+func GetLowestLocationNumber(seeds []int, maps []ResourceMap) int {
+	locations := []int{}
+	for _, seed := range seeds {
+		locations = append(locations, GetSeedLocation(seed, maps))
+	}
+	sort.Slice(locations, func(i, j int) bool {
+		return locations[i] > locations[j]
+	})
+	return locations[len(locations)-1]
 }
 
 func ReadFile(path string) []string {
@@ -92,10 +115,11 @@ func ReadFile(path string) []string {
 }
 
 func main() {
-	//lines := ReadFile("../test_input.txt")
-	//seeds := GetSeeds(lines[0])
-	// maps := MapInput(lines)
-	// for _, seed := range seeds {
+	lines := ReadFile("../day_5_input.txt")
+	seeds := GetSeeds(lines[0])
+	maps := MapInput(lines)
 
-	// }
+	lowest := GetLowestLocationNumber(seeds, maps)
+
+	fmt.Println(lowest)
 }

@@ -2,18 +2,52 @@ package main
 
 import "testing"
 
+func TestGetLowestLocationNumber(t *testing.T) {
+	lines := ReadFile("../test_input.txt")
+	seeds := GetSeeds(lines[0])
+	maps := MapInput(lines)
+
+	expect := 35
+
+	got := GetLowestLocationNumber(seeds, maps)
+
+	if got != expect {
+		t.Errorf("Wrong location number found. Got %v, expected %v \n",
+			got, expect)
+	}
+}
+
+func TestGetDestination(t *testing.T) {
+	lines := ReadFile("../test_input.txt")
+	seeds := GetSeeds(lines[0])
+	maps := MapInput(lines)
+
+	expect := []int{81, 14, 57, 13}
+
+	for i := 0; i < 4; i++ {
+		got := GetDestination(seeds[i], maps[0].resourceRange)
+
+		if got != expect[i] {
+			t.Errorf("Wrong destination number found. Got %v, expected %v \n",
+				got, expect[i])
+		}
+	}
+}
+
 func TestGetSeedLocation(t *testing.T) {
 	lines := ReadFile("../test_input.txt")
 	seeds := GetSeeds(lines[0])
 	maps := MapInput(lines)
 
-	expect := 82
+	expect := []int{82, 43, 86, 35}
 
-	got := GetSeedLocation(seeds[0], maps)
+	for i := 0; i < 4; i++ {
+		got := GetSeedLocation(seeds[i], maps)
 
-	if got != expect {
-		t.Errorf("Wrong seed location found. Got %v, expected %v \n",
-			got, expect)
+		if got != expect[i] {
+			t.Errorf("Wrong location number found. Got %v, expected %v \n",
+				got, expect[i])
+		}
 	}
 }
 func TestGetSeeds(t *testing.T) {

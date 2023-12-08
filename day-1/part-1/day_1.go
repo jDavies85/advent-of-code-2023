@@ -49,7 +49,7 @@ func ExtractNumber(str string) int {
 
 func main() {
 	fmt.Println("Hello Day 1")
-	lines := ReadFile("day_1_input.txt")
+	lines := ReadFile("../day_1_input.txt")
 	var numbers = []int{}
 	for _, line := range lines {
 		var number = ExtractNumber(line)
