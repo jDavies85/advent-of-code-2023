@@ -66,6 +66,12 @@ func GetNumber(str string) int {
 	return number
 }
 
+func GetSeedLocation(seed int, maps []ResourceMap) int {
+	result := 0
+
+	return result
+}
+
 func ReadFile(path string) []string {
 	readFile, err := os.Open(path)
 
@@ -86,10 +92,10 @@ func ReadFile(path string) []string {
 }
 
 func main() {
-	lines := ReadFile("../test_input.txt")
-	seeds := GetSeeds(lines[0])
-	maps := MapInput(lines)
-	for _, seed := range seeds {
+	//lines := ReadFile("../test_input.txt")
+	//seeds := GetSeeds(lines[0])
+	// maps := MapInput(lines)
+	// for _, seed := range seeds {
 
-	}
+	// }
 }

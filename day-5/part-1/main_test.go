@@ -2,6 +2,20 @@ package main
 
 import "testing"
 
+func TestGetSeedLocation(t *testing.T) {
+	lines := ReadFile("../test_input.txt")
+	seeds := GetSeeds(lines[0])
+	maps := MapInput(lines)
+
+	expect := 82
+
+	got := GetSeedLocation(seeds[0], maps)
+
+	if got != expect {
+		t.Errorf("Wrong seed location found. Got %v, expected %v \n",
+			got, expect)
+	}
+}
 func TestGetSeeds(t *testing.T) {
 	lines := ReadFile("../test_input.txt")
 	expect := []int{79, 14, 55, 13}
